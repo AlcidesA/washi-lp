@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+@function strip-unit($value) {
+	@return $value / ($value * 0 + 1);
+}
+
+$min_width: 320px;
+$max_width: 1400px;
+
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+	$u1: unit($min-vw);
+	$u2: unit($max-vw);
+	$u3: unit($min-font-size);
+	$u4: unit($max-font-size);
+
+	@if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+		& {
+			font-size: $min-font-size;
+
+			@media screen and (min-width: $min-vw) {
+				font-size: calc(
+					#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+						((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+				);
+			}
+
+			@media screen and (min-width: $max-vw) {
+				font-size: $max-font-size;
+			}
+		}
+	}
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	overflow-x: hidden;
+}
+
+$ligth-grey: #e8e8e8;
+$grey: #2d2c2d;
+$blue1: #3091f2;
+$blue2: #3060f2;
+$blue3: #3030f2;
+$blue4: #000859;
+$blue5: #2980b9;
+
+.wrapper {
+	width: 90%;
+	max-width: 1260px;
+	margin: 0 auto;
+}
+
+a,
+button,
+input[type="submit"],
+input[type="button"] {
+	background: transparent;
+	display: block;
+	font-family: inherit;
+	text-decoration: none;
+	outline: none;
+	border: 0;
+	cursor: pointer;
+	color: inherit;
+}
+
+a[href] {
+	cursor: pointer;
+}
+
+label {
+	display: block;
+}
+
+input,
+select,
+textarea {
+	background: transparent;
+	color: inherit;
+	line-height: 1.1;
+	border: 0;
+	outline: none;
+}
+
+.clear {
+	clear: both;
+}
+
+@mixin flex-center-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+header {
+	background: $ligth-grey;
+	.wrapper {
+		@include flex-center-between;
+		padding: 20px 0;
+
+		img {
+			width: 75px;
+			height: auto;
+		}
+
+		nav {
+			ul {
+				@include flex-center-between;
+
+				li {
+					color: $blue2;
+					font-weight: bold;
+					text-transform: uppercase;
+					margin-left: 40px;
+					font-size: 16px;
+				}
+			}
+		}
+	}
+}
+
+.banner {
+	background: $ligth-grey;
+	height: calc(100vh - 56px);
+	
+	h1 {
+		$min_font: 42px;
+		$max_font: 62px;
+		@include fluid-type($min_width, $max_width, $min_font, $max_font);
+		line-height: normal;
+		padding-top: 180px;
+		color: $blue2;
+		font-weight: bold;
+	}
+
+	p {
+		$min_font: 36px;
+		$max_font: 52px;
+		@include fluid-type($min_width, $max_width, $min_font, $max_font);
+		color: $blue2;
+		font-weight: bold;
+	}
+
+	img {
+		width: 25%;
+		max-width: 220px;
+		min-width: 160px;
+		height: auto;
+		margin-top: 50px;
+	}
+}
+
+
+//4~10
